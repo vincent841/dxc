@@ -4,11 +4,16 @@ cmake_minimum_required( VERSION 3.0 )
 # 프로젝트 이름 및 버전
 project( "dxc" )
  
-# 빌드 형상(Configuration) 및 주절주절 Makefile 생성 여부
+# Build configuration
 set( CMAKE_BUILD_TYPE Debug )
 set( CMAKE_VERBOSE_MAKEFILE true )
- 
-# 빌드 대상 바이너리 파일명 및 소스 파일 목록
+
+# Build custom configuration
+set( DX_BUILD_ARM ON)
+
+
+#################################################3
+# Build Target & source file list
 set( SRC_LIBRARY
         "dxc"
         )
@@ -106,13 +111,23 @@ set( DEMO_FILES
         )        
  
 # toolchain selections
-set( CMAKE_C_COMPILER "arm-linux-gnueabihf-gcc" )
-set( CMAKE_CXX_COMPILER "arm-linux-gnueabihf-g++" )
-set(CMAKE_LINKER "arm-linux-gnueabihf-ld")
-set(CMAKE_NM "arm-linux-gnueabihf-nm")
-set(CMAKE_OBJCOPY "arm-linux-gnueabihf-objcopy")
-set(CMAKE_OBJDUMP "arm-linux-gnueabihf-objdump")
-set(CMAKE_RANLIB "arm-linux-gnueabihf-gcc-ranlib")
+if(DX_BUILD_ARM)
+        set( CMAKE_C_COMPILER "arm-linux-gnueabihf-gcc" )
+        set( CMAKE_CXX_COMPILER "arm-linux-gnueabihf-g++" )
+        set(CMAKE_LINKER "arm-linux-gnueabihf-ld")
+        set(CMAKE_NM "arm-linux-gnueabihf-nm")
+        set(CMAKE_OBJCOPY "arm-linux-gnueabihf-objcopy")
+        set(CMAKE_OBJDUMP "arm-linux-gnueabihf-objdump")
+        set(CMAKE_RANLIB "arm-linux-gnueabihf-gcc-ranlib")
+else()        
+        set( CMAKE_C_COMPILER "gcc" )
+        set( CMAKE_CXX_COMPILER "g++" )
+        set(CMAKE_NM "nm")
+        set(CMAKE_OBJCOPY "objcopy")
+        set(CMAKE_OBJDUMP "objdump")
+        set(CMAKE_RANLIB "ranlib")        
+endif()
+
  
 # include directories
 include_directories( include )

@@ -12,3 +12,5 @@
 /demo-arm/
 /dx.log
 .settings/
+build/
+
