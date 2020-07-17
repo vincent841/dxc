@@ -1,0 +1,14 @@
+/debug-arm-shared/
+/release-arm-shared/
+/debug-arm-static/
+/release-arm-static/
+/debug-linux-static/
+/release-linux-static/
+/debug-linux-shared/
+/release-linux-shared/
+/test-linux/
+/test-arm/
+/demo-linux/
+/demo-arm/
+/dx.log
+.settings/
