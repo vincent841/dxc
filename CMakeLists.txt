@@ -2,14 +2,18 @@
 cmake_minimum_required( VERSION 3.0 )
  
 # 프로젝트 이름 및 버전
-project( "dxc" )
+project( "dxc" C CXX)
  
 # Build configuration
 set( CMAKE_BUILD_TYPE Debug )
 set( CMAKE_VERBOSE_MAKEFILE true )
 
+# opencv 
+set(CMAKE_CXX_STANDARD 11)
+find_package( OpenCV REQUIRED )
+
 # Build custom configuration
-set( DX_BUILD_ARM ON)
+set( DX_BUILD_ARM OFF )
 
 
 #################################################3
@@ -74,6 +78,7 @@ set( TEST_FILES
         test/util_schedule_test.c
         test/main.c                
         test/net_server_test.c
+        test/opencv_test.cpp
         )
 
 set( DEMO_FILES
@@ -127,10 +132,9 @@ else()
         set(CMAKE_OBJDUMP "objdump")
         set(CMAKE_RANLIB "ranlib")        
 endif()
-
  
 # include directories
-include_directories( include )
+include_directories( include /home/jinwon/Documents/opencv/opencv-4.2.0/include )
  
 # common compile option
 add_compile_options( -g -Wall )
@@ -158,12 +162,7 @@ set( CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BUILD_TYPE} )
 set( CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BUILD_TYPE}/lib )
 set( CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BUILD_TYPE}/lib )
 
-
-# add executables
-link_libraries( pthread dxc )
-
 add_executable( ${TEST_EXEC} ${TEST_FILES} )
-add_dependencies( ${TEST_EXEC} ${SRC_LIBRARY} )
-
+target_link_libraries( ${TEST_EXEC} ${SRC_LIBRARY} )
 add_executable( ${DEMO_EXEC} ${DEMO_FILES} )
-add_dependencies( ${DEMO_EXEC} ${SRC_LIBRARY} )
+target_link_libraries( ${DEMO_EXEC} ${SRC_LIBRARY} )
